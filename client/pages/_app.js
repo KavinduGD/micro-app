@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import buildClient from "../api/build-client";
 import Header from "../component/header";
 import axios from "axios";
-//our other component load throgh this app component
+
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
@@ -11,18 +11,22 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
     </div>
   );
 };
-//If we add getInitialProps to app component , other component initialProps function won't be excute automatiically
+
 AppComponent.getInitialProps = async (appContext) => {
-  //const client = buildClient(appContext.ctx);
+  let headers = {};
+
+  // Only include headers if this is running on the server
+  if (appContext.ctx.req) {
+    // Check if the req object exists
+    headers = appContext.ctx.req.headers; // Safe to use headers here
+  }
+
   const { data } = await axios.get(
     "http://www.kavindugihan.site/api/users/currentuser",
-    {
-      headers: appContext.ctx.req.headers,
-    }
+    { headers } // Pass headers only if they exist
   );
 
   let pageProps = {};
-
   if (appContext.Component.getInitialProps) {
     pageProps = await appContext.Component.getInitialProps(appContext.ctx);
   }
