@@ -7,13 +7,8 @@ const LandingPage = ({ currentUser }) => {
 
 LandingPage.getInitialProps = async (context) => {
   console.log("Landing page");
-  //const client = buildClient(context);
-  const { data } = await axios.get(
-    "http://www.kavindugihan.site/api/users/currentuser",
-    {
-      headers: context.req.headers || {},
-    }
-  );
+  const client = buildClient(context);
+  const { data } = await client.get("api/users/currentuser");
 
   return data;
 };
