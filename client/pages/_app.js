@@ -15,7 +15,10 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 AppComponent.getInitialProps = async (appContext) => {
   //const client = buildClient(appContext.ctx);
   const { data } = await axios.get(
-    "http://www.kavindugihan.site/api/users/currentuser"
+    "http://www.kavindugihan.site/api/users/currentuser",
+    {
+      headers: appContext.ctx.req.headers,
+    }
   );
 
   let pageProps = {};
