@@ -14,21 +14,18 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 //If we add getInitialProps to app component , other component initialProps function won't be excute automatiically
 AppComponent.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx);
-  try {
-    const { data } = await client.get("/api/users/currentuser");
-    return {
-      pageProps,
-      currentUser: data.currentUser,
-    };
-  } catch (error) {
-    console.error(
-      "Failed to fetch current user:",
-      error.message,
-      "URL:",
-      client.baseUrl
-    );
-    throw error; // Ensure the error is visible and affects the flow as expected
+  const { data } = await client.get("/api/users/currentuser");
+
+  let pageProps = {};
+
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
   }
+
+  return {
+    pageProps,
+    currentUser: data.currentUser,
+  };
 };
 
 export default AppComponent;
