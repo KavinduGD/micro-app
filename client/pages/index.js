@@ -1,21 +1,22 @@
 import axios from "axios";
 import buildClient from "../api/build-client";
 
-const LandingPage = ({ currentUser }) => {
-  return <> {currentUser ? <h1>You are sign in</h1> : <h1>No user</h1>}</>;
+const buildClient = ({ req }) => {
+  if (typeof window === "undefined") {
+    // We are on the server, requests should be made with full domain
+    const baseURL = "http://www.kavindugihan.site/";
+    const headers = req ? req.headers : {}; // Ensure req exists before accessing headers
+
+    return axios.create({
+      baseURL,
+      headers,
+    });
+  } else {
+    // We are in the browser, requests can be made with a relative URL
+    return axios.create({
+      baseURL: "/",
+    });
+  }
 };
 
-LandingPage.getInitialProps = async (context) => {
-  console.log("Landing page");
-  //const client = buildClient(context);
-  const { data } = await axios.get(
-    "http://www.kavindugihan.site/api/users/currentuser",
-    {
-      headers: context.req.headers,
-    }
-  );
-
-  return data;
-};
-
-export default LandingPage;
+export default buildClient;
