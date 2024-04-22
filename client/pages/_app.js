@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.css";
 import buildClient from "../api/build-client";
 import Header from "../component/header";
-
+import axios from "axios";
 //our other component load throgh this app component
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
