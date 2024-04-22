@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-  console.log("Staring Up Auth Service123");
+  console.log("Staring Up Auth Service12345");
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defind");
   }
