@@ -6,8 +6,7 @@ const buildClient = ({ req }) => {
     //requests shpud be made to http://ingess-nginx.ingress-nginx..............
 
     return axios.create({
-      baseURL:
-        "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
+      baseURL: "http://www.kavindugihan.site",
       headers: req.headers,
     });
   } else {
