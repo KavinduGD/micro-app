@@ -12,20 +12,22 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
   );
 };
 //If we add getInitialProps to app component , other component initialProps function won't be excute automatiically
-// AppComponent.getInitialProps = async (appContext) => {
-//   const client = buildClient(appContext.ctx);
-//   const { data } = await client.get("api/users/currentuser");
+AppComponent.getInitialProps = async (appContext) => {
+  //const client = buildClient(appContext.ctx);
+  const { data } = await axios.get(
+    "http://www.kavindugihan.site/api/users/currentuser"
+  );
 
-//   let pageProps = {};
+  let pageProps = {};
 
-//   if (appContext.Component.getInitialProps) {
-//     pageProps = await appContext.Component.getInitialProps(appContext.ctx);
-//   }
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+  }
 
-//   return {
-//     pageProps,
-//     currentUser: data.currentUser,
-//   };
-// };
+  return {
+    pageProps,
+    currentUser: data.currentUser,
+  };
+};
 
 export default AppComponent;
