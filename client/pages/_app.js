@@ -11,7 +11,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
     </div>
   );
 };
-If we add getInitialProps to app component , other component initialProps function won't be excute automatiically
+//If we add getInitialProps to app component , other component initialProps function won't be excute automatiically
 AppComponent.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx);
   const { data } = await client.get("/api/users/currentuser");
